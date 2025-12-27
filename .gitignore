@@ -1,7 +1,12 @@
-# Ignore IntelliJ / IDE files
-.idea/
-*.iml
+# Ignore compiled Java bytecode
+*.class
 
-# Ignore build/output (optional)
+# Ignore build directories (optional but recommended)
+bin/
 out/
 target/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.iml
