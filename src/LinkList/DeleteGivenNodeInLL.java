@@ -10,36 +10,73 @@ public class DeleteGivenNodeInLL {
         }
     }
 
-    public static Node getDeleletedNodeList(Node list, Node node){
+     public static Node getCycleInLinkList(Node list) {
+        Node slow = list;
+        Node fast = list;
+        boolean cycle = false;
 
-        Node temp = list;
-        
-        if(node == null || node.next == null){
-            System.out.println("we can't delete the last element or null in this given list..");
+        // Step 1: Detect if cycle exists
+        while (fast != null && slow != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) { // meeting point
+                cycle = true;
+                break;
+            }
+        }
+
+        if (cycle) {
+            System.out.println("cycle detected in the linked list.");
+            return slow.next;
+        } else{
+            System.out.println("No Cycle detected in the linked list.");
             return null;
         }
 
-        while(list != null){
-            if(list.data == node.data){
-                list.data = list.next.data;
-                list.next = list.next.next;
-            }
-            list = list.next;
-        }
-        return temp;
+        // Step 2: Find the start node of the cycle
+        // slow = list; // move slow to head
+
+        // while (slow != fast) {
+        //     slow = slow.next;
+        //     fast = fast.next;
+        // }
+        
+
     }
-    
-     public static void main(String[] args){
+
+    public static void main(String[] args) {
+
         Node list = new Node(1);
         list.next = new Node(2);
-        list.next.next = new Node(3);
+        list.next.next = new Node(3); 
         list.next.next.next = new Node(4);
+        list.next.next.next.next = new Node(5);
 
-       Node head = getDeleletedNodeList(list, list.next.next);
-       while(head != null){
-        System.out.print(head.data + "->");
-        head = head.next;
-       }
-       System.out.print("null");
+        // Create a cycle — 5 -> 3
+        list.next.next.next.next.next = new Node(0);
+
+        int count = 0;
+
+        Node temp = getCycleInLinkList(list);
+        if(temp != null){
+            while (list != null) {
+            System.out.print(list.data + " -> ");    
+            list = list.next;
+            if(list == temp ){
+               count++;
+               if(count == 2){
+                break;
+               }
+            }
+            }
+            System.out.print("( continious )");
+        } else {
+            while (list != null) {
+            System.out.print(list.data + " -> ");
+            list = list.next;
+            }
+            System.out.print("null");
+        }
     }
 }
